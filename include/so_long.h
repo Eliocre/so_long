@@ -72,22 +72,34 @@ typedef struct s_sprite_slice
 	int	h;
 }	t_sprite_slice;
 
-typedef struct	s_game
+typedef struct s_coord
 {
-	t_win		win;
-	t_img		image;
-	t_sprite	player;
-	t_sprite	mobs;
-}	t_game;
+	int	x;
+	int	y;
+}	t_coord;
 
 typedef struct s_maplayout
 {
-    size_t    lincmp;
-    size_t    colcmp;
-    int        exicmp;
-    int        stacmp;
-    int        itecmp;
+    size_t		lincmp;
+    size_t		colcmp;
+    int			exicmp;
+    int			stacmp;
+    int			itecmp;
+	t_coord		player_coord;	
 }    t_maplayout;
+
+typedef struct	s_game
+{
+	t_win		win;
+	t_img		wall;
+	t_img		ground;
+	t_img		exit;
+	t_img		item;
+	t_sprite	player;
+	t_sprite	mobs;
+	char		**map;
+	t_maplayout	layout;
+}	t_game;
 
 void			add_frame(t_anim *an, t_sprite s, t_sprite_slice slice);
 void			destroy_sprite(t_sprite s);
@@ -108,7 +120,11 @@ void			layout_errors(t_maplayout *layout, char *map);
 void			free_exit(void *ptr, char *str, char *map);
 void			checklayout(t_maplayout *layout, char *gnl, int first_last, char **map);
 void			checkmap(int fd, t_maplayout *layout, char **map);
-void			checkerror(int argc, char *argv, char **map);
+void			checkerror(int argc, char *argv, char **map, t_maplayout *layout);
 void			free_map(char **strs);
+t_coord			coord_finder(char **map, char c);
+int				fill(char **tab, t_coord size, t_coord cur, char tofind);
+void			check_mapresolver(char *map_read, t_maplayout *layout, t_coord player_coord);
+void			loadmap(char **map, t_game *game);
 
 #endif

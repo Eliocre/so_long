@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
-#include "../libft/include/get_next_line.h"
 
 t_maplayout	layout_init(void)
 {
@@ -22,6 +21,8 @@ t_maplayout	layout_init(void)
 	layout.exicmp = 0;
 	layout.stacmp = 0;
 	layout.itecmp = 0;
+	layout.player_coord.x = 0;
+	layout.player_coord.y = 0;
 	return (layout);
 }
 
@@ -36,22 +37,6 @@ t_maplayout	layout_init(void)
 //--check nb player / end / items
 //--
 //game
-
-int	charcmp(char *str, char c)
-{
-	int	i;
-	int	inturn;
-
-	i = 0;
-	inturn = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			inturn++;
-		i++;
-	}
-	return (inturn);
-}
 
 void	layout_errors(t_maplayout *layout, char *map)
 {
@@ -70,23 +55,6 @@ void	layout_errors(t_maplayout *layout, char *map)
 	if (layout->itecmp == 0)
 	{
 		ft_printf("Error \nMap needs at least one item!\n");
-		free(map);
-		exit(1);
-	}
-}
-
-void	free_exit(void *ptr, char *str, char *map)
-{
-	if (map == NULL)
-	{
-		ft_printf("%s", str);
-		free(ptr);
-		exit(1);
-	}
-	else
-	{
-		ft_printf("%s", str);
-		free(ptr);
 		free(map);
 		exit(1);
 	}
@@ -144,11 +112,10 @@ void	checkmap(int fd, t_maplayout *layout, char **map)
 	}
 }
 
-void	checkerror(int argc, char *argv, char **map)
+void	checkerror(int argc, char *argv, char **map, t_maplayout *layout)
 {
-	int				fd;
-	char			*check;
-	t_maplayout		layout;
+	int		fd;
+	char	*check;
 
 	if (argc != 2)
 	{
@@ -161,13 +128,17 @@ void	checkerror(int argc, char *argv, char **map)
 		ft_printf("Error \nMap is not a .ber format!\n");
 		exit(1);
 	}
+	// if (ft_strlen(argv) == 4)
+	// {
+	// 	ft_printf("Error \nMap is only a .ber!\n");
+	// 	exit(1);
+	// }
 	fd = open(argv, O_RDONLY);
 	if (fd < 0)
 	{
 		ft_printf("Error \nFile descriptor is not valid!\n");
 		exit(1);
 	}
-	layout = layout_init();
-	checkmap(fd, &layout, map);
-	layout_errors(&layout, *map);
+	checkmap(fd, layout, map);
+	layout_errors(layout, *map);
 }

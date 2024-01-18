@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:50:36 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/15 18:46:10 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/18 16:23:05 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static char	**split_word(char **strs, char *s, char c)
 	return (strs);
 }
 
-char	**ft_split(char *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**strs;
 
@@ -106,6 +106,5 @@ char	**ft_split(char *s, char c)
 	if (strs == NULL)
 		return (NULL);
 	strs[count_words(s, c)] = NULL;
-	free(s);
 	return (strs);
 }

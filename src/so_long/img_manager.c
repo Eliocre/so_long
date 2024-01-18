@@ -60,19 +60,21 @@ void	put_pixel_img(t_img img, int x, int y, int color)
 	}
 }
 
-void	put_img_to_img(t_img dst, t_img src, int x, int y) //to rework
-{
-	int i;
-	int j;
+//to rework
+// void	put_img_to_img(t_img dst, t_img src, int x, int y)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	while(i < src.wi) {
-		j = 0;
-		while (j < src.he) {
-			put_pixel_img(dst, x + i, y + j, get_pixel_img(src, i, j));
-			j++;
-		}
-		i++;
-	}
-}
-
+// 	i = 0;
+// 	while (i < src.wi)
+// 	{
+// 		j = 0;
+// 		while (j < src.he)
+// 		{
+// 			put_pixel_img(dst, x + i, y + j, get_pixel_img(src, i, j));
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }

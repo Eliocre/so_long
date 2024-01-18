@@ -96,6 +96,6 @@ void	update_anim(void *ptr)
 		an->current_frame++;
 		an->current_frame %= ft_lstsize(an->frames);
 		img = (t_img *)ft_lstget(an->frames, an->current_frame)->content;
-		mlx_put_image_to_window(img->win.mlx, img->win.win, img->img, 150, 150);
+		mlx_put_image_to_window(img->win.mlx, img->win.win, img->img, 4 * 64, 3 * 64);
 	}
 }

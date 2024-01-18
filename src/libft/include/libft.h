@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:17:11 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/15 18:51:08 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/18 16:23:13 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_strrchr(const char *string, int chrtofind);
 char	*ft_strchr(const char *string, int chrtofind);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_strjoin(char *s1, char *s2);
-char	**ft_split(char *s, char c);
+char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s);
 char	*ft_itoa(int n);
 int		ft_isalnum(int c);

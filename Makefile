@@ -10,7 +10,8 @@ MLBX_DIR = $(SRC_DIR)minilibx-linux/
 LIBFT_DIR = $(SRC_DIR)libft/
 SO_LONG_DIR = $(SRC_DIR)so_long/
 
-SRCS = oui.c utils.c img_manager.c sprite_manager.c error_manager.c \
+SRCS = oui.c utils.c img_manager.c sprite_manager.c error_manager.c utils_error.c \
+		tests.c
 
 HEADERS = ./include/so_long.h ./libft/include/libft.h ./libft/include/printf.h \
 		./libft/include/get_next_line_bonus.h \
@@ -43,7 +44,8 @@ fclean :
 	cd $(LIBFT_DIR) && $(MAKE) --no-print-directory fclean
 	rm -rf $(OBJS) $(NAME)
 
-re : fclean all
+re : fclean
+	$(MAKE) all
 
 .PHONY : all clean fclean re
 

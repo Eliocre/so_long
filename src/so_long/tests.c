@@ -67,7 +67,7 @@ void	casemap(char c, int i, int j, t_game *game)
 	// if (c == 'M')
 	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->wall.img, 64 * i, 64 * j);
 	// if (c == 'P')
-	// 	//load player
+	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->player.sprite.img, 64 * i, 64 * j);
 }
 
 void	loadmap(char **map, t_game *game)

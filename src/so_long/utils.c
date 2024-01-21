@@ -41,7 +41,7 @@ t_list	*ft_lstget(t_list *lst, int index)
 	return (NULL);
 }
 
-void	ft_lstiter_param(t_list *lst, void (*f)(void *, void *), void *ptr)
+void	ft_lstiter_param(t_list *lst, void (*f)(void *, t_game *), t_game *ptr)
 {
 	t_list	*temp;
 

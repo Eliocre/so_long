@@ -82,7 +82,7 @@ void	add_frame(t_anim *an, t_sprite s, t_sprite_slice slice)
 	ft_lstadd_back(&an->frames, lst);
 }
 
-void	update_anim(void *ptr)
+void	update_anim(void *ptr, t_game *game)
 {
 	t_anim	*an;
 	t_img	*img;
@@ -96,6 +96,6 @@ void	update_anim(void *ptr)
 		an->current_frame++;
 		an->current_frame %= ft_lstsize(an->frames);
 		img = (t_img *)ft_lstget(an->frames, an->current_frame)->content;
-		mlx_put_image_to_window(img->win.mlx, img->win.win, img->img, 4 * 64, 3 * 64);
+		mlx_put_image_to_window(img->win.mlx, img->win.win, img->img, game->layout.player_coord.y * 64, game->layout.player_coord.x * 64);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:07:47 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/18 19:00:43 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/22 18:04:34 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 //	'P' == start point
 
 void	check_mapresolver(char *map_read, t_maplayout *layout,
-t_coord player_coord)
+t_coord player_coord, char **map)
 {
 	char			**mapcheck;
 
@@ -36,7 +36,7 @@ t_coord player_coord)
 	if (fill(mapcheck, (t_coord){layout->colcmp - 1, layout->lincmp - 1},
 		player_coord, 'C') != layout->itecmp)
 	{
-		free_map(mapcheck);
+		free_map_double(mapcheck, map);
 		free_exit(map_read,
 			"Error \nMap is not solvable (an item is out of reach)!\n", NULL);
 	}
@@ -47,7 +47,7 @@ t_coord player_coord)
 	if (fill(mapcheck, (t_coord){layout->colcmp - 1, layout->lincmp - 1},
 		player_coord, 'E') != 1)
 	{
-		free_map(mapcheck);
+		free_map_double(mapcheck, map);
 		free_exit(map_read,
 			"Error \nMap is not solvable (the exit is out of reach)!\n", NULL);
 	}
@@ -64,8 +64,8 @@ void	casemap(char c, int i, int j, t_game *game)
 		mlx_put_image_to_window(game->win.mlx, game->win.win, game->item.img, 64 * i, 64 * j);
 	if (c == 'E')
 		mlx_put_image_to_window(game->win.mlx, game->win.win, game->exit.img, 64 * i, 64 * j);
-	// if (c == 'M')
-	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->wall.img, 64 * i, 64 * j);
+	if (c == 'M')
+		mlx_put_image_to_window(game->win.mlx, game->win.win, game->mobs.img, 64 * i, 64 * j);
 	// if (c == 'P')
 	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->player.sprite.img, 64 * i, 64 * j);
 }

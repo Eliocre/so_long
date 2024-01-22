@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:08:06 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/08 14:14:17 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/22 15:42:58 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 		(*del)((prev)->content);
 		free(prev);
 	}
-	*lst = 0;
+	*lst = NULL;
 }

@@ -96,6 +96,6 @@ void	update_anim(void *ptr, t_game *game)
 		an->current_frame++;
 		an->current_frame %= ft_lstsize(an->frames);
 		img = (t_img *)ft_lstget(an->frames, an->current_frame)->content;
-		mlx_put_image_to_window(img->win.mlx, img->win.win, img->img, game->layout.player_coord.y * 64, game->layout.player_coord.x * 64);
+		mlx_put_image_to_window(img->win.mlx, img->win.win, img->img, game->layout.player_coord.x * 64, game->layout.player_coord.y * 64);
 	}
 }

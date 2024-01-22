@@ -85,18 +85,20 @@ typedef struct s_maplayout
     int			exicmp;
     int			stacmp;
     int			itecmp;
-	t_coord		player_coord;	
+	t_coord		player_coord;
 }    t_maplayout;
 
 typedef struct	s_game
 {
+	t_list		*test;
 	t_win		win;
 	t_img		wall;
 	t_img		ground;
 	t_img		exit;
 	t_img		item;
 	t_sprite	player;
-	t_sprite	mobs;
+	t_img		mobs;
+	t_anim		*animation;
 	char		**map;
 	t_maplayout	layout;
 }	t_game;
@@ -122,9 +124,10 @@ void			checklayout(t_maplayout *layout, char *gnl, int first_last, char **map);
 void			checkmap(int fd, t_maplayout *layout, char **map);
 void			checkerror(int argc, char *argv, char **map, t_maplayout *layout);
 void			free_map(char **strs);
+void			free_map_double(char **strs, char **strs2);
 t_coord			coord_finder(char **map, char c);
 int				fill(char **tab, t_coord size, t_coord cur, char tofind);
-void			check_mapresolver(char *map_read, t_maplayout *layout, t_coord player_coord);
+void			check_mapresolver(char *map_read, t_maplayout *layout, t_coord player_coord, char **map);
 void			loadmap(char **map, t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:38:38 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/17 14:39:22 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/22 18:04:01 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,26 @@ void	free_map(char **strs)
 		i++;
 	}
 	free(strs);
+}
+
+void	free_map_double(char **strs, char **strs2)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i])
+	{
+		free(strs[i]);
+		i++;
+	}
+	free(strs);
+	i = 0;
+	while (strs2[i])
+	{
+		free(strs2[i]);
+		i++;
+	}
+	free(strs2);
 }
 
 void	free_exit(void *ptr, char *str, char *map)

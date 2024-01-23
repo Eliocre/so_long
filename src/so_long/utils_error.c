@@ -6,11 +6,20 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:38:38 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/22 18:04:01 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/23 15:02:23 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
+
+void	ft_lencheck(char *argv)
+{
+	if (ft_strlen(argv) == 4)
+	{
+		ft_printf("Error \nMap is only a .ber!\n");
+		exit(1);
+	}
+}
 
 void	free_map(char **strs)
 {

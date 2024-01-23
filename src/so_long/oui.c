@@ -13,17 +13,15 @@
 //-lmlx -lXext -lX11
 #include "../../include/so_long.h"
 
+// ft_lstclear(&game->player.anim, free);
 int	exit_hook(t_game *game)
 {
-	// ft_lstclear(&game->player.anim, free);
 	mlx_destroy_image(game->wall.win.mlx, game->wall.img);
 	mlx_destroy_image(game->item.win.mlx, game->item.img);
 	mlx_destroy_image(game->ground.win.mlx, game->ground.img);
 	mlx_destroy_image(game->exit.win.mlx, game->exit.img);
 	destroy_sprite(game->player);
 	free_map(game->map);
-	// ft_lstclear(&game->test, free);
-	// ft_lstclear(&game->animation->frames, free);
 	mlx_destroy_window(game->win.mlx, game->win.win);
 	mlx_destroy_display(game->win.mlx);
 	free(game->win.mlx);
@@ -40,10 +38,34 @@ int	update(t_game *game) //t_list *list
 
 void	update_map(t_game *game, t_coord next)
 {
-	game->map[game->layout.player_coord.y][game->layout.player_coord.x] = '0';
+	if (game->map[next.y][next.x] != 'C')
+	{
+		game->map[game->layout.player_coord.y][game->layout.player_coord.x] = game->layout.player_stats.curspot;
+		game->layout.player_stats.curspot = game->map[next.y][next.x];
+	}
+	else
+	{
+		game->map[game->layout.player_coord.y][game->layout.player_coord.x] = '0';
+		game->layout.player_stats.curspot = game->map[game->layout.player_coord.y][game->layout.player_coord.x];
+		game->layout.player_stats.itemcmp++;
+	}
+	if (game->map[next.y][next.x] == 'E')
+	{
+		if (game->layout.player_stats.itemcmp == game->layout.itecmp)
+		{
+			ft_printf("yipee");
+			exit_hook(game);
+		}
+	}
+	if (game->map[next.y][next.x] == 'M')
+	{
+		ft_printf("NONNN");
+		exit_hook(game);
+	}
 	game->map[next.y][next.x] = 'P';
 	game->layout.player_coord.y = next.y;
 	game->layout.player_coord.x = next.x;
+	game->layout.player_stats.movecmp++;
 }
 
 int	is_legal(t_game *game, int dir)
@@ -65,6 +87,9 @@ int	is_legal(t_game *game, int dir)
 
 int	ft_event(int keysym, t_game *game)
 {
+	char	*tmp;
+
+	tmp = NULL;
 	if (keysym == XK_Escape)
 		exit_hook(game);
 	if (keysym == XK_a)
@@ -74,6 +99,8 @@ int	ft_event(int keysym, t_game *game)
 			mlx_clear_window(game->win.mlx, game->win.win);
 			update_map(game, (t_coord){game->layout.player_coord.x - 1, game->layout.player_coord.y});
 			loadmap(game->map, game);
+			tmp = ft_itoa(game->layout.player_stats.movecmp);
+			mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215, tmp);
 		}
 	}
 	if (keysym == XK_w)
@@ -83,6 +110,8 @@ int	ft_event(int keysym, t_game *game)
 			mlx_clear_window(game->win.mlx, game->win.win);
 			update_map(game, (t_coord){game->layout.player_coord.x, game->layout.player_coord.y - 1});
 			loadmap(game->map, game);
+			tmp = ft_itoa(game->layout.player_stats.movecmp);
+			mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215, tmp);
 		}
 	}
 	if (keysym == XK_d)
@@ -92,6 +121,8 @@ int	ft_event(int keysym, t_game *game)
 			mlx_clear_window(game->win.mlx, game->win.win);
 			update_map(game, (t_coord){game->layout.player_coord.x + 1, game->layout.player_coord.y});
 			loadmap(game->map, game);
+			tmp = ft_itoa(game->layout.player_stats.movecmp);
+			mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215, tmp);
 		}
 	}
 	if (keysym == XK_s)
@@ -101,8 +132,11 @@ int	ft_event(int keysym, t_game *game)
 			mlx_clear_window(game->win.mlx, game->win.win);
 			update_map(game, (t_coord){game->layout.player_coord.x, game->layout.player_coord.y + 1});
 			loadmap(game->map, game);
+			tmp = ft_itoa(game->layout.player_stats.movecmp);
+			mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215, tmp);
 		}
 	}
+	free(tmp);
 	return (0);
 }
 
@@ -115,13 +149,43 @@ int	ft_event(int keysym, t_game *game)
 // --'M' == mob
 // --'E' == exit
 
-int	main(int argc, char **argv)
+//today:
+//if thing: load back after going on it with the player #done#
+//player inventory for items #done#
+//lose and win #done#
+//
+
+void	imgcheck(t_img img)
 {
-	// t_list			*test;
-	// t_anim			*test2;
-	t_game			game;
-	t_sprite_slice	slice1;
-	char			*map_read;
+	if (img.img == NULL)
+	{
+		mlx_destroy_window(img.win.mlx, img.win.win);
+		mlx_destroy_display(img.win.mlx);
+		free(img.win.mlx);
+		exit (1);
+	}
+}
+
+void	load_img(t_game *game)
+{
+	game->wall = new_img_file(game->win, "./textures/wall.xpm");
+	imgcheck(game->wall);
+	game->ground = new_img_file(game->win, "./textures/sol.xpm");
+	imgcheck(game->ground);
+	game->exit = new_img_file(game->win, "./textures/exit.xpm");
+	imgcheck(game->exit);
+	game->item = new_img_file(game->win, "./textures/item.xpm");
+	imgcheck(game->item);
+	game->mobs = new_img_file(game->win, "./textures/mob.xpm");
+	imgcheck(game->mobs);
+	game->player = new_sprite("./textures/full_sprite.xpm", &game->win);
+}
+
+
+t_game	game_init(int argc, char **argv)
+{
+	t_game	game;
+	char	*map_read;
 
 	map_read = NULL;
 	game.layout = layout_init();
@@ -131,38 +195,27 @@ int	main(int argc, char **argv)
 		free_exit(map_read, "Malloc error\n l.35 tests.c", NULL);
 	game.layout.player_coord = coord_finder(game.map, 'P');
 	check_mapresolver(map_read, &game.layout, game.layout.player_coord, game.map);
-	free(map_read);
-	// relative_path = "./textures/yipee.xpm";
-	game.win = new_wind(1920, 1080, "amongus");
+	game.win = new_wind(3840, 2160, "so_long");
 	if (game.win.win == NULL)
 	{
 		mlx_destroy_display(game.win.mlx);
 		free(game.win.mlx);
-		return (1);
+		exit (1);
 	}
-	game.wall = new_img_file(game.win, "./textures/wall.xpm");
-	game.ground = new_img_file(game.win, "./textures/sol.xpm");
-	game.exit = new_img_file(game.win, "./textures/exit.xpm");
-	game.item = new_img_file(game.win, "./textures/item.xpm");
-	game.mobs = new_img_file(game.win, "./textures/mob.xpm");
-	game.player = new_sprite("./textures/full_sprite.xpm", &game.win);
-	if (game.player.sprite.img == NULL)
-	{
-		destroy_sprite(game.player);
-		mlx_destroy_window(game.win.mlx, game.win.win);
-		return (1);
-	}
+	load_img(&game);
+	free(map_read);
+	return (game);
+}
+
+int	main(int argc, char **argv)
+{
+	t_game			game;
+	t_sprite_slice	slice1;
+
+	game = game_init(argc, argv);
 	loadmap(game.map, &game);
-	// img = new_img_file(mainwin, relative_path);
-	// if (img.img == NULL)
-	// {
-	// 	mlx_destroy_window(mainwin.mlx, mainwin.win);
-	// 	mlx_destroy_display(mainwin.mlx);
-	// 	free(mainwin.mlx);
-	// 	return (1);
-	// }
 	slice1 = (t_sprite_slice){0, 0, 64, 64};
-	game.animation = slice_sprite(game.player, slice1, 4, 500);
+	game.animation = slice_sprite(game.player, slice1, 4, 600);
 	if (game.animation == NULL)
 		return (1);
 	game.test = ft_lstnew(game.animation);
@@ -170,18 +223,10 @@ int	main(int argc, char **argv)
 		return (1);
 	ft_lstadd_back(&game.player.anim, game.test);
 	mlx_key_hook(game.win.win, ft_event, &game);
-	mlx_loop_hook(game.win.mlx, update, &game); //.player.anim
-	// mlx_put_image_to_window(mainwin.mlx, mainwin.win, img.img, 0, 0);
-	// free(game.player.path);
-	// mlx_destroy_image(game.player.sprite.win.mlx, game.player.sprite.img);
-	// mlx_destroy_image(mainwin.mlx, img.img);
+	mlx_loop_hook(game.win.mlx, update, &game);
 	mlx_hook(game.win.win, DestroyNotify, StructureNotifyMask,
 		exit_hook, &game);
-	// mlx_key_hook(mainwin.win, ft_event, &s1.sprite.win);
-	// mlx_hook(mainwin.win, DestroyNotify, StructureNotifyMask,
-	// 	exit_hook, &s1.sprite.win);
 	mlx_loop(game.win.mlx);
-	// need to find a way to put sprite into mainwin
 	mlx_destroy_window(game.win.mlx, game.win.win);
 	free(game.win.mlx);
 }

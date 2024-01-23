@@ -35,7 +35,7 @@ t_anim	*slice_sprite(t_sprite s, t_sprite_slice slice, int frames, int delay)
 
 	an = ft_calloc(1, sizeof(t_anim));
 	if (an == NULL)
-		return (NULL);
+		exit(1);
 	*an = (t_anim){NULL, slice.w, slice.h, delay, 0, 0, 0, 0};
 	i = 0;
 	while (i < frames)
@@ -63,10 +63,10 @@ void	add_frame(t_anim *an, t_sprite s, t_sprite_slice slice)
 
 	frame = ft_calloc(1, sizeof(t_img));
 	if (frame == NULL)
-		return ;
+		exit(1);
 	*frame = new_img(slice.w, slice.h, s.sprite.win);
 	if (frame->img == NULL)
-		return ;
+		exit(1);
 	i = 0;
 	while (i < slice.w)
 	{
@@ -78,7 +78,7 @@ void	add_frame(t_anim *an, t_sprite s, t_sprite_slice slice)
 	}
 	lst = ft_lstnew(frame);
 	if (lst == NULL)
-		return ;
+		exit(1);
 	ft_lstadd_back(&an->frames, lst);
 }
 
@@ -89,7 +89,7 @@ void	update_anim(void *ptr, t_game *game)
 
 	an = (t_anim *)ptr;
 	if (an == NULL)
-		return ;
+		exit(1);
 	if (an->tmp_delay++ == an->delay)
 	{
 		an->tmp_delay = 0;

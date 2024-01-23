@@ -78,6 +78,13 @@ typedef struct s_coord
 	int	y;
 }	t_coord;
 
+typedef struct s_playstats
+{
+	char	curspot;
+	int		itemcmp;
+	int		movecmp;
+}	t_playstats;
+
 typedef struct s_maplayout
 {
     size_t		lincmp;
@@ -86,6 +93,7 @@ typedef struct s_maplayout
     int			stacmp;
     int			itecmp;
 	t_coord		player_coord;
+	t_playstats	player_stats;
 }    t_maplayout;
 
 typedef struct	s_game
@@ -129,5 +137,6 @@ t_coord			coord_finder(char **map, char c);
 int				fill(char **tab, t_coord size, t_coord cur, char tofind);
 void			check_mapresolver(char *map_read, t_maplayout *layout, t_coord player_coord, char **map);
 void			loadmap(char **map, t_game *game);
+void			ft_lencheck(char *argv);
 
 #endif

@@ -13,6 +13,21 @@
 //-lmlx -lXext -lX11
 #include "../../include/so_long.h"
 
+void	free_animation(t_game *game, t_list *start)
+{
+	t_list		*temp;
+
+	temp = NULL;
+	while (start)
+	{
+		temp = start;
+		start = start->next;
+		if (game != NULL)
+			mlx_destroy_image(game->win.mlx, temp->content);
+		free(temp);
+	}
+}
+
 // ft_lstclear(&game->player.anim, free);
 int	exit_hook(t_game *game)
 {
@@ -21,6 +36,7 @@ int	exit_hook(t_game *game)
 	mlx_destroy_image(game->ground.win.mlx, game->ground.img);
 	mlx_destroy_image(game->exit.win.mlx, game->exit.img);
 	destroy_sprite(game->player);
+	// free_animation(game, game->animation->frames);
 	free_map(game->map);
 	mlx_destroy_window(game->win.mlx, game->win.win);
 	mlx_destroy_display(game->win.mlx);
@@ -32,6 +48,8 @@ int	update(t_game *game) //t_list *list
 {
 	if (!game->player.anim)
 		return (1);
+	if (game->map[game->layout.player_coord.y - 1][game->layout.player_coord.x] &&
+		game->map[game->layout.player_coord.y - 1][game->layout.player_coord.x] == '1')
 	ft_lstiter_param(game->player.anim, update_anim, game);
 	return (0);
 }
@@ -195,7 +213,7 @@ t_game	game_init(int argc, char **argv)
 		free_exit(map_read, "Malloc error\n l.35 tests.c", NULL);
 	game.layout.player_coord = coord_finder(game.map, 'P');
 	check_mapresolver(map_read, &game.layout, game.layout.player_coord, game.map);
-	game.win = new_wind(3840, 2160, "so_long");
+	game.win = new_wind((game.layout.colcmp - 1) * 64, game.layout.lincmp * 64, "so_long"); //game.layout.colcmp * 64, game.layout.lincmp * 64 // 3840, 2160
 	if (game.win.win == NULL)
 	{
 		mlx_destroy_display(game.win.mlx);
@@ -213,9 +231,10 @@ int	main(int argc, char **argv)
 	t_sprite_slice	slice1;
 
 	game = game_init(argc, argv);
+	change_map_sprite(game.map);
 	loadmap(game.map, &game);
-	slice1 = (t_sprite_slice){0, 0, 64, 64};
-	game.animation = slice_sprite(game.player, slice1, 4, 600);
+	slice1 = (t_sprite_slice){0, 64, 64, 64};
+	game.animation = slice_sprite(game.player, slice1, 15, 200);
 	if (game.animation == NULL)
 		return (1);
 	game.test = ft_lstnew(game.animation);
@@ -223,6 +242,7 @@ int	main(int argc, char **argv)
 		return (1);
 	ft_lstadd_back(&game.player.anim, game.test);
 	mlx_key_hook(game.win.win, ft_event, &game);
+
 	mlx_loop_hook(game.win.mlx, update, &game);
 	mlx_hook(game.win.win, DestroyNotify, StructureNotifyMask,
 		exit_hook, &game);

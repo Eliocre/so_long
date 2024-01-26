@@ -60,14 +60,45 @@ void	casemap(char c, int i, int j, t_game *game)
 		mlx_put_image_to_window(game->win.mlx, game->win.win, game->wall.img, 64 * i, 64 * j);
 	if (c == '0')
 		mlx_put_image_to_window(game->win.mlx, game->win.win, game->ground.img, 64 * i, 64 * j);
+	// if (c == '2')
+	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->ground.img, 64 * i, 64 * j); for ground sprite
 	if (c == 'C')
 		mlx_put_image_to_window(game->win.mlx, game->win.win, game->item.img, 64 * i, 64 * j);
+	// if (c == 'c')
+	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->item.img, 64 * i, 64 * j);
 	if (c == 'E')
 		mlx_put_image_to_window(game->win.mlx, game->win.win, game->exit.img, 64 * i, 64 * j);
+	// if (c == 'e')
+	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->exit.img, 64 * i, 64 * j);
 	if (c == 'M')
 		mlx_put_image_to_window(game->win.mlx, game->win.win, game->mobs.img, 64 * i, 64 * j);
-	// if (c == 'P')
-	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->player.sprite.img, 64 * i, 64 * j);
+	// if (c == 'm')
+	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->mobs.img, 64 * i, 64 * j);
+}
+
+void	change_map_sprite(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == '0' && map[i - 1][j] && map[i - 1][j] == '1')
+				map[i][j] = '2';
+			else if (map[i][j] == 'M' && map[i - 1][j] && map[i - 1][j] == '1')
+				map[i][j] = 'm';
+			else if (map[i][j] == 'E' && map[i - 1][j] && map[i - 1][j] == '1')
+				map[i][j] = 'e';
+			else if (map[i][j] == 'C' && map[i - 1][j] && map[i - 1][j] == '1')
+				map[i][j] = 'c';
+			j++;
+		}
+		i++;
+	}
 }
 
 void	loadmap(char **map, t_game *game)

@@ -138,5 +138,6 @@ int				fill(char **tab, t_coord size, t_coord cur, char tofind);
 void			check_mapresolver(char *map_read, t_maplayout *layout, t_coord player_coord, char **map);
 void			loadmap(char **map, t_game *game);
 void			ft_lencheck(char *argv);
+void			change_map_sprite(char **map);
 
 #endif

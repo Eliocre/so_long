@@ -2,7 +2,7 @@
 NAME = so_long
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 XFLAGS = -lXext -lX11
 
 SRC_DIR = src/

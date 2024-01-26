@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:07:47 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/22 18:04:34 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/26 18:40:23 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,23 @@ void	loadmap(char **map, t_game *game)
 	}
 }
 
-t_coord	coord_finder(char **map, char c)
+t_coord	coord_finder(char **map, char c, t_coord start)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
+	int	bool_;
 
-	i = 0;
+	bool_ = 0;
+	i = start.y;
 	while (map[i])
 	{
-		j = 0;
+		if (bool_ == 0)
+		{
+			j = start.x;
+			bool_ = 1;
+		}
+		else
+			j = 0;
 		while (map[i][j])
 		{
 			if (map[i][j] == c)

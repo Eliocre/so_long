@@ -21,9 +21,11 @@ t_maplayout	layout_init(void)
 	layout.exicmp = 0;
 	layout.stacmp = 0;
 	layout.itecmp = 0;
+	layout.mobcmp = 0;
 	layout.player_coord.x = 0;
 	layout.player_coord.y = 0;
 	layout.player_stats.itemcmp = 0;
+	layout.player_stats.lastmove = 1;
 	layout.player_stats.movecmp = 0;
 	layout.player_stats.curspot = '0';
 	return (layout);
@@ -85,6 +87,7 @@ void	checklayout(t_maplayout *layout, char *gnl, int first_last, char **map)
 	layout->exicmp += charcmp(gnl, 'E');
 	layout->stacmp += charcmp(gnl, 'P');
 	layout->itecmp += charcmp(gnl, 'C');
+	layout->mobcmp += charcmp(gnl, 'M');
 	// i = 0;
 	// while (gnl[i])
 	// {

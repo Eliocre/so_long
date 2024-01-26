@@ -83,6 +83,7 @@ typedef struct s_playstats
 	char	curspot;
 	int		itemcmp;
 	int		movecmp;
+	int		lastmove;
 }	t_playstats;
 
 typedef struct s_maplayout
@@ -92,12 +93,21 @@ typedef struct s_maplayout
     int			exicmp;
     int			stacmp;
     int			itecmp;
+	int			mobcmp;
 	t_coord		player_coord;
 	t_playstats	player_stats;
 }    t_maplayout;
 
 typedef struct	s_game
 {
+	t_anim		*animdown;
+	t_anim		*animup;
+	t_anim		*animleft;
+	t_anim		*animright;
+	t_anim		*animdownwall;
+	t_anim		*animupwall;
+	t_anim		*animleftwall;
+	t_anim		*animrightwall;
 	t_list		*test;
 	t_win		win;
 	t_img		wall;
@@ -106,7 +116,7 @@ typedef struct	s_game
 	t_img		item;
 	t_sprite	player;
 	t_img		mobs;
-	t_anim		*animation;
+	t_coord		*mob;
 	char		**map;
 	t_maplayout	layout;
 }	t_game;
@@ -133,7 +143,7 @@ void			checkmap(int fd, t_maplayout *layout, char **map);
 void			checkerror(int argc, char *argv, char **map, t_maplayout *layout);
 void			free_map(char **strs);
 void			free_map_double(char **strs, char **strs2);
-t_coord			coord_finder(char **map, char c);
+t_coord			coord_finder(char **map, char c, t_coord start);
 int				fill(char **tab, t_coord size, t_coord cur, char tofind);
 void			check_mapresolver(char *map_read, t_maplayout *layout, t_coord player_coord, char **map);
 void			loadmap(char **map, t_game *game);

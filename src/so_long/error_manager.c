@@ -22,12 +22,6 @@ t_maplayout	layout_init(void)
 	layout.stacmp = 0;
 	layout.itecmp = 0;
 	layout.mobcmp = 0;
-	layout.player_coord.x = 0;
-	layout.player_coord.y = 0;
-	layout.player_stats.itemcmp = 0;
-	layout.player_stats.lastmove = 1;
-	layout.player_stats.movecmp = 0;
-	layout.player_stats.curspot = '0';
 	return (layout);
 }
 

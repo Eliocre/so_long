@@ -90,12 +90,16 @@ typedef struct s_playstats
 typedef struct s_anim
 {
 	t_list		*animdown;
+	t_list		*animdownbak;
 	t_list		*animdownwall;
 	t_list		*animup;
+	t_list		*animupbak;
 	t_list		*animupwall;
 	t_list		*animleft;
+	t_list		*animleftbak;
 	t_list		*animleftwall;
 	t_list		*animright;
+	t_list		*animrightbak;
 	t_list		*animrightwall;
 }	t_anim;
 
@@ -116,7 +120,6 @@ typedef struct s_player
 	t_coord			player_coord;
 	t_playstats		player_stats;
 	t_anim			sprites;
-	struct s_player	*next;
 }				t_player;
 
 typedef struct	s_game
@@ -158,5 +161,21 @@ void			check_mapresolver(char *map_read, t_maplayout *layout, t_coord player_coo
 void			loadmap(char **map, t_game *game);
 void			ft_lencheck(char *argv);
 void			change_map_sprite(char **map);
+t_list			*generate_animleft(t_game *game, int i);
+t_list			*generate_animup(t_game *game, int i);
+t_list			*generate_animdown(t_game *game, int i);
+t_list			*generate_animright(t_game *game, int i);
+void			anim_right(t_game *game, t_player *player);
+void			anim_left(t_game *game, t_player *player);
+void			anim_down(t_game *game, t_player *player);
+void			anim_up(t_game *game, t_player *player);
+char			*ft_strjoin_free(char *s1, char *s2);
+void			casemap_enemy(char c, int i, int j, t_game *game);
+void			move_down(int keysym, t_game *game);
+void			move_up(int keysym, t_game *game);
+void			move_left(int keysym, t_game *game);
+void			move_right(int keysym, t_game *game);
+int				is_legal(t_game *game, int dir);
+void			update_map(t_game *game, t_coord next);
 
 #endif

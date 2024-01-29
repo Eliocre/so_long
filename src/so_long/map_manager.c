@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests.c                                            :+:      :+:    :+:   */
+/*   map_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:07:47 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/26 18:40:23 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/29 19:28:03 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/so_long.h"
-
-//parsing
-//-needs the map in a 2D tab 
-
-//	'M' == enemy |
-//	'1' == wall	 > No walking
-
-//	'0' == empty > walking
-
-//	'E' == exit	 |
-//	'C' == item	 > goals
-
-//	'P' == start point
 
 void	check_mapresolver(char *map_read, t_maplayout *layout,
 t_coord player_coord, char **map)
@@ -54,51 +41,40 @@ t_coord player_coord, char **map)
 	free_map(mapcheck);
 }
 
+	// if (c == '2')
+	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->ground.img, 
+	//	64 * i, 64 * j); for ground sprite
+	// if (c == 'c')
+	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->item.img,
+	//64 * i, 64 * j);
+	// if (c == 'e')
+	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->exit.img,
+	//64 * i, 64 * j);
+
 void	casemap(char c, int i, int j, t_game *game)
 {
 	if (c == '1')
-		mlx_put_image_to_window(game->win.mlx, game->win.win, game->wall.img, 64 * i, 64 * j);
+		mlx_put_image_to_window(game->win.mlx, game->win.win, game->wall.img,
+			64 * i, 64 * j);
 	if (c == '0')
-		mlx_put_image_to_window(game->win.mlx, game->win.win, game->ground.img, 64 * i, 64 * j);
-	// if (c == '2')
-	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->ground.img, 64 * i, 64 * j); for ground sprite
+		mlx_put_image_to_window(game->win.mlx, game->win.win, game->ground.img,
+			64 * i, 64 * j);
 	if (c == 'C')
-		mlx_put_image_to_window(game->win.mlx, game->win.win, game->item.img, 64 * i, 64 * j);
-	// if (c == 'c')
-	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->item.img, 64 * i, 64 * j);
+		mlx_put_image_to_window(game->win.mlx, game->win.win, game->item.img,
+			64 * i, 64 * j);
 	if (c == 'E')
-		mlx_put_image_to_window(game->win.mlx, game->win.win, game->exit.img, 64 * i, 64 * j);
-	// if (c == 'e')
-	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->exit.img, 64 * i, 64 * j);
-	if (c == 'M')
-		mlx_put_image_to_window(game->win.mlx, game->win.win, game->mobs.img, 64 * i, 64 * j);
-	// if (c == 'm')
-	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->mobs.img, 64 * i, 64 * j);
+		mlx_put_image_to_window(game->win.mlx, game->win.win, game->exit.img,
+			64 * i, 64 * j);
 }
 
-void	change_map_sprite(char **map)
+// if (c == 'm')
+	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->mobs.img,
+	//64 * i, 64 * j);
+void	casemap_enemy(char c, int i, int j, t_game *game)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == '0' && map[i - 1][j] && map[i - 1][j] == '1')
-				map[i][j] = '2';
-			else if (map[i][j] == 'M' && map[i - 1][j] && map[i - 1][j] == '1')
-				map[i][j] = 'm';
-			else if (map[i][j] == 'E' && map[i - 1][j] && map[i - 1][j] == '1')
-				map[i][j] = 'e';
-			else if (map[i][j] == 'C' && map[i - 1][j] && map[i - 1][j] == '1')
-				map[i][j] = 'c';
-			j++;
-		}
-		i++;
-	}
+	if (c == 'M')
+		mlx_put_image_to_window(game->win.mlx, game->win.win, game->mobs.img,
+			64 * i, 64 * j);
 }
 
 void	loadmap(char **map, t_game *game)
@@ -113,38 +89,11 @@ void	loadmap(char **map, t_game *game)
 		while (map[i][j])
 		{
 			casemap(map[i][j], j, i, game);
+			casemap_enemy(map[i][j], j, i, game);
 			j++;
 		}
 		i++;
 	}
-}
-
-t_coord	coord_finder(char **map, char c, t_coord start)
-{
-	int	i;
-	int	j;
-	int	bool_;
-
-	bool_ = 0;
-	i = start.y;
-	while (map[i])
-	{
-		if (bool_ == 0)
-		{
-			j = start.x;
-			bool_ = 1;
-		}
-		else
-			j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] == c)
-				return ((t_coord){j, i});
-			j++;
-		}
-		i++;
-	}
-	return ((t_coord){0, 0});
 }
 
 int	fill(char **tab, t_coord size, t_coord cur, char tofind)

@@ -15,7 +15,7 @@ LIBFT_SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 			ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstclear_bonus.c \
 			ft_lstdelone_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c 
 
-PRINTF_SRCS = ft_check.c ft_printf.c ft_putnbr_base.c tools.c
+PRINTF_SRCS = ft_check.c ft_printf.c ft_putnbr_base.c tools.c 
 
 GNL_SRCS = get_next_line.c get_next_line_utils.c
 

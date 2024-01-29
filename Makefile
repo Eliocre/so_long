@@ -10,8 +10,8 @@ MLBX_DIR = $(SRC_DIR)minilibx-linux/
 LIBFT_DIR = $(SRC_DIR)libft/
 SO_LONG_DIR = $(SRC_DIR)so_long/
 
-SRCS = oui.c utils.c img_manager.c sprite_manager.c error_manager.c utils_error.c \
-		tests.c
+SRCS = main.c utils.c img_manager.c sprite_manager.c error_manager.c utils_error.c \
+		map_manager.c anim_manager.c utils_map.c control_manager.c
 
 HEADERS = ./include/so_long.h ./libft/include/libft.h ./libft/include/printf.h \
 		./libft/include/get_next_line_bonus.h \

@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:14:03 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/15 15:24:08 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/29 19:00:21 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*get_next_line(int fd)
 {
 	static t_listgnl	*lst[1024];
-	char			*line;
+	char				*line;
 
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
@@ -82,7 +82,7 @@ void	ft_addback(t_listgnl **lst, char *buffer)
 char	*ft_line_new(t_listgnl **lst, char *line)
 {
 	t_listgnl	*current;
-	int		len;
+	int			len;
 
 	current = *lst;
 	len = ft_lst_len(current);
@@ -100,9 +100,9 @@ char	*ft_line_new(t_listgnl **lst, char *line)
 void	ft_lstcleargnl(t_listgnl **lst)
 {
 	t_listgnl	*last;
-	int		i;
-	int		k;
-	char	*buffer;
+	int			i;
+	int			k;
+	char		*buffer;
 
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (buffer == NULL)

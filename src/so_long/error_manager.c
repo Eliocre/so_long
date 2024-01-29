@@ -67,28 +67,27 @@ void	layout_errors(t_maplayout *layout, char *map)
 
 void	checklayout(t_maplayout *layout, char *gnl, int first_last, char **map)
 {
-	// int	i;
+	int	i;
 
 	if (layout->colcmp == 0)
 		layout->colcmp = ft_strlen(gnl) - 1;
 	if (layout->colcmp != ft_strlen(gnl) - 1)
 		free_exit(gnl, "Error \nMap is not rectangular!\n", *map);
-	// if ((gnl[0] != '1' || gnl[layout->colcmp - 1] != '1')
-	// 	|| (charcmp(gnl, '1') != (int)layout->colcmp
-	// 		&& first_last == 1))
-	// 	free_exit(gnl, "Error \nMap is not surrounded by walls!\n", *map);
-	(void)first_last;
+	if ((gnl[0] != '1' || gnl[layout->colcmp - 1] != '1')
+		|| (charcmp(gnl, '1') != (int)layout->colcmp
+			&& first_last == 1))
+		free_exit(gnl, "Error \nMap is not surrounded by walls!\n", *map);
 	layout->exicmp += charcmp(gnl, 'E');
 	layout->stacmp += charcmp(gnl, 'P');
 	layout->itecmp += charcmp(gnl, 'C');
 	layout->mobcmp += charcmp(gnl, 'M');
-	// i = 0;
-	// while (gnl[i])
-	// {
-	// 	if (ft_strchr("01PECM\n", gnl[i]) == NULL)
-	// 		free_exit(gnl, "Error \nMap is using invalid characters!\n", *map);
-	// 	i++;
-	// }
+	i = 0;
+	while (gnl[i])
+	{
+		if (ft_strchr("01PECM\n", gnl[i]) == NULL)
+			free_exit(gnl, "Error \nMap is using invalid characters!\n", *map);
+		i++;
+	}
 }
 
 void	checkmap(int fd, t_maplayout *layout, char **map)
@@ -113,7 +112,7 @@ void	checkmap(int fd, t_maplayout *layout, char **map)
 		}
 		free(lastgnl);
 		lastgnl = ft_strdup(gnl);
-		*map = ft_strjoin(*map, gnl);
+		*map = ft_strjoin_free(*map, gnl);
 		checklayout(layout, lastgnl, layout->colcmp == 0, map);
 		layout->lincmp++;
 	}

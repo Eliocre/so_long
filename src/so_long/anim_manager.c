@@ -67,3 +67,18 @@ void	anim_right(t_game *game, t_player *player)
 		temp->sprites.animright->content,
 		temp->player_coord.x * 64, temp->player_coord.y * 64);
 }
+
+void	free_animation(t_game *game, t_list *start)
+{
+	t_list		*temp;
+
+	temp = NULL;
+	while (start)
+	{
+		temp = start;
+		start = start->next;
+		if (game)
+			mlx_destroy_image(game->win.mlx, temp->content);
+		free(temp);
+	}
+}

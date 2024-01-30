@@ -41,40 +41,40 @@ t_coord player_coord, char **map)
 	free_map(mapcheck);
 }
 
-	// if (c == '2')
-	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->ground.img, 
-	//	64 * i, 64 * j); for ground sprite
-	// if (c == 'c')
-	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->item.img,
-	//64 * i, 64 * j);
-	// if (c == 'e')
-	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->exit.img,
-	//64 * i, 64 * j);
-
 void	casemap(char c, int i, int j, t_game *game)
 {
 	if (c == '1')
 		mlx_put_image_to_window(game->win.mlx, game->win.win, game->wall.img,
 			64 * i, 64 * j);
+	if (c == '2')
+		mlx_put_image_to_window(game->win.mlx, game->win.win,
+			game->groundwall.img, 64 * i, 64 * j);
 	if (c == '0')
 		mlx_put_image_to_window(game->win.mlx, game->win.win, game->ground.img,
 			64 * i, 64 * j);
 	if (c == 'C')
-		mlx_put_image_to_window(game->win.mlx, game->win.win, game->item.img,
-			64 * i, 64 * j);
+		mlx_put_image_to_window(game->win.mlx, game->win.win,
+			game->itemground.img, 64 * i, 64 * j);
+	if (c == 'c')
+		mlx_put_image_to_window(game->win.mlx, game->win.win,
+			game->itemwall.img, 64 * i, 64 * j);
 	if (c == 'E')
-		mlx_put_image_to_window(game->win.mlx, game->win.win, game->exit.img,
-			64 * i, 64 * j);
+		mlx_put_image_to_window(game->win.mlx, game->win.win,
+			game->exitground.img, 64 * i, 64 * j);
+	if (c == 'e')
+		mlx_put_image_to_window(game->win.mlx, game->win.win,
+			game->exitwall.img, 64 * i, 64 * j);
 }
 
-// if (c == 'm')
-	// 	mlx_put_image_to_window(game->win.mlx, game->win.win, game->mobs.img,
-	//64 * i, 64 * j);
+
 void	casemap_enemy(char c, int i, int j, t_game *game)
 {
 	if (c == 'M')
-		mlx_put_image_to_window(game->win.mlx, game->win.win, game->mobs.img,
-			64 * i, 64 * j);
+		mlx_put_image_to_window(game->win.mlx, game->win.win,
+		game->mobsground.img, 64 * i, 64 * j);
+	if (c == 'm')
+		mlx_put_image_to_window(game->win.mlx, game->win.win,
+		game->mobswall.img, 64 * i, 64 * j);
 }
 
 void	loadmap(char **map, t_game *game)

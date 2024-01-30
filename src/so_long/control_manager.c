@@ -25,7 +25,8 @@ void	move_down(int keysym, t_game *game)
 			// tmp = ft_itoa(game->player.player_stats.movecmp);
 			game->player.player_stats.lastmove = 4;
 			ft_printf("Moves : %d\n", game->player.player_stats.movecmp);
-			// mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215, tmp);
+			// mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215,
+			//	tmp);
 		}
 	}
 }
@@ -43,7 +44,8 @@ void	move_left(int keysym, t_game *game)
 			// tmp = ft_itoa(game->player.player_stats.movecmp);
 			game->player.player_stats.lastmove = 1;
 			ft_printf("Moves : %d\n", game->player.player_stats.movecmp);
-			// mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215, tmp);
+			// mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215,
+			//	tmp);
 		}
 	}
 }
@@ -61,7 +63,8 @@ void	move_up(int keysym, t_game *game)
 			// tmp = ft_itoa(game->player.player_stats.movecmp);
 			game->player.player_stats.lastmove = 2;
 			ft_printf("Moves : %d\n", game->player.player_stats.movecmp);
-			// mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215, tmp);
+			// mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215,
+			// tmp);
 		}
 	}
 }
@@ -79,7 +82,8 @@ void	move_right(int keysym, t_game *game)
 			// tmp = ft_itoa(game->player.player_stats.movecmp);
 			game->player.player_stats.lastmove = 3;
 			ft_printf("Moves : %d\n", game->player.player_stats.movecmp);
-			// mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215, tmp);
+			// mlx_string_put(game->win.mlx, game->win.win, 27, 35, 16777215,
+			// tmp);
 		}
 	}
 }

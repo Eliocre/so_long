@@ -40,22 +40,3 @@ t_img	new_img_file(t_win win, char *relative_path)
 				&img.line_length, &img.endian);
 	return (img);
 }
-
-unsigned int	get_pixel_img(t_img img, int x, int y)
-{
-	return (*(unsigned int *)((img.addr
-			+ (y * img.line_length) + (x * img.bits_per_pixel / 8))));
-}
-
-void	put_pixel_img(t_img img, int x, int y, int color)
-{
-	char	*dst;
-
-	if (color == (int)0xFF000000)
-		return ;
-	if (x >= 0 && y >= 0 && x < img.wi && y < img.he)
-	{
-		dst = img.addr + (y * img.line_length + x * (img.bits_per_pixel / 8));
-		*(unsigned int *) dst = color;
-	}
-}

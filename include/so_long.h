@@ -105,15 +105,13 @@ typedef struct s_anim
 
 typedef struct s_maplayout
 {
-    size_t		lincmp;
-    size_t		colcmp;
-    int			exicmp;
-    int			stacmp;
-    int			itecmp;
-	int			mobcmp;
-	// t_coord		player_coord;
-	// t_playstats	player_stats;
-}    t_maplayout;
+	size_t	lincmp;
+	size_t	colcmp;
+	int		exicmp;
+	int		stacmp;
+	int		itecmp;
+	int		mobcmp;
+}	t_maplayout;
 
 typedef struct s_player
 {
@@ -122,18 +120,20 @@ typedef struct s_player
 	t_anim			sprites;
 }				t_player;
 
-typedef struct	s_game
+typedef struct s_game
 {
-
 	t_list		*test;
 	t_win		win;
 	t_img		wall;
 	t_img		ground;
-	t_img		exit;
-	t_img		item;
+	t_img		groundwall;
+	t_img		exitground;
+	t_img		exitwall;
+	t_img		itemground;
+	t_img		itemwall;
 	t_player	player;
-	t_img		mobs;
-	// t_coord		*mob;
+	t_img		mobswall;
+	t_img		mobsground;
 	int			framecmp;
 	char		**map;
 	t_maplayout	layout;
@@ -142,22 +142,24 @@ typedef struct	s_game
 t_win			new_wind(int w, int h, char *str);
 t_img			new_img_file(t_win win, char *relative_path);
 t_list			*ft_lstget(t_list *lst, int index);
-void			ft_lstiter_param(t_list *lst, void (*f)(void *, t_game *), t_game *ptr);
+void			ft_lstiter_param(t_list *lst, void (*f)(void *, t_game *),
+					t_game *ptr);
 t_img			new_img(int w, int h, t_win window);
-void			put_pixel_img(t_img img, int x, int y, int color);
-unsigned int	get_pixel_img(t_img img, int x, int y);
 t_maplayout		layout_init(void);
 int				charcmp(char *str, char c);
 void			layout_errors(t_maplayout *layout, char *map);
 void			free_exit(void *ptr, char *str, char *map);
-void			checklayout(t_maplayout *layout, char *gnl, int first_last, char **map);
+void			checklayout(t_maplayout *layout, char *gnl, int first_last,
+					char **map);
 void			checkmap(int fd, t_maplayout *layout, char **map);
-void			checkerror(int argc, char *argv, char **map, t_maplayout *layout);
+void			checkerror(int argc, char *argv, char **map,
+					t_maplayout *layout);
 void			free_map(char **strs);
 void			free_map_double(char **strs, char **strs2);
 t_coord			coord_finder(char **map, char c, t_coord start);
 int				fill(char **tab, t_coord size, t_coord cur, char tofind);
-void			check_mapresolver(char *map_read, t_maplayout *layout, t_coord player_coord, char **map);
+void			check_mapresolver(char *map_read, t_maplayout *layout,
+					t_coord player_coord, char **map);
 void			loadmap(char **map, t_game *game);
 void			ft_lencheck(char *argv);
 void			change_map_sprite(char **map);
@@ -177,5 +179,11 @@ void			move_left(int keysym, t_game *game);
 void			move_right(int keysym, t_game *game);
 int				is_legal(t_game *game, int dir);
 void			update_map(t_game *game, t_coord next);
+void			free_animation(t_game *game, t_list *start);
+t_game			game_init(int argc, char **argv);
+void			win(t_game *game, t_coord next);
+void			loose(t_game *game, t_coord next);
+int				exit_hook(t_game *game);
+void			load_img(t_game *game);
 
 #endif

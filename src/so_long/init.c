@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 22:55:39 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/30 20:23:35 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/31 18:20:33 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_maplayout	layout_init(void)
 	layout.exicmp = 0;
 	layout.stacmp = 0;
 	layout.itecmp = 0;
-	layout.mobcmp = 0;
 	return (layout);
 }
 
@@ -61,41 +60,7 @@ t_game	game_init(int argc, char **argv)
 		free(game.win.mlx);
 		exit (1);
 	}
-	game.framecmp = 1;
 	load_img(&game);
 	free(map_read);
 	return (game);
-}
-
-void	imgcheck(t_img img)
-{
-	if (img.img == NULL)
-	{
-		mlx_destroy_window(img.win.mlx, img.win.win);
-		mlx_destroy_display(img.win.mlx);
-		free(img.win.mlx);
-		exit (1);
-	}
-}
-
-void	load_img(t_game *game)
-{
-	game->wall = new_img_file(game->win, "./textures/wall.xpm");
-	imgcheck(game->wall);
-	game->ground = new_img_file(game->win, "./textures/ground.xpm");
-	imgcheck(game->ground);
-	game->groundwall = new_img_file(game->win, "./textures/wallground.xpm");
-	imgcheck(game->groundwall);
-	game->exitwall = new_img_file(game->win, "./textures/door.xpm");
-	imgcheck(game->exitwall);
-	game->exitground = new_img_file(game->win, "./textures/trapdoor.xpm");
-	imgcheck(game->exitground);
-	game->itemground = new_img_file(game->win, "./textures/item.xpm");
-	imgcheck(game->itemground);
-	game->itemwall = new_img_file(game->win, "./textures/itemwall.xpm");
-	imgcheck(game->itemwall);
-	game->mobswall = new_img_file(game->win, "./textures/cerberuswall.xpm");
-	imgcheck(game->mobswall);
-	game->mobsground = new_img_file(game->win, "./textures/cerberus.xpm");
-	imgcheck(game->mobsground);
 }

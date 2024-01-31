@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:07:47 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/29 19:28:03 by eandre           ###   ########.fr       */
+/*   Updated: 2024/01/31 18:15:03 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,14 @@ void	casemap(char c, int i, int j, t_game *game)
 			game->exitwall.img, 64 * i, 64 * j);
 }
 
-
-void	casemap_enemy(char c, int i, int j, t_game *game)
+void	casemapplayer(char c, int i, int j, t_game *game)
 {
-	if (c == 'M')
+	if (c == 'P' && game->player.player_stats.curspot == '0')
 		mlx_put_image_to_window(game->win.mlx, game->win.win,
-		game->mobsground.img, 64 * i, 64 * j);
-	if (c == 'm')
+			game->player.sprite.img, 64 * i, 64 * j);
+	if (c == 'P' && game->player.player_stats.curspot == '2')
 		mlx_put_image_to_window(game->win.mlx, game->win.win,
-		game->mobswall.img, 64 * i, 64 * j);
+			game->player.spritewall.img, 64 * i, 64 * j);
 }
 
 void	loadmap(char **map, t_game *game)
@@ -89,7 +88,7 @@ void	loadmap(char **map, t_game *game)
 		while (map[i][j])
 		{
 			casemap(map[i][j], j, i, game);
-			casemap_enemy(map[i][j], j, i, game);
+			casemapplayer(map[i][j], j, i, game);
 			j++;
 		}
 		i++;
@@ -101,8 +100,7 @@ int	fill(char **tab, t_coord size, t_coord cur, char tofind)
 	int	inturn;
 
 	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x
-		|| (tab[cur.y][cur.x] == '1' || tab[cur.y][cur.x] == 'M'
-		|| tab[cur.y][cur.x] == 'F'))
+		|| (tab[cur.y][cur.x] == '1' || tab[cur.y][cur.x] == 'F'))
 		return (0);
 	if (tab[cur.y][cur.x] == tofind)
 		inturn = 1;

@@ -20,39 +20,6 @@ t_win	new_wind(int w, int h, char *str)
 	return ((t_win){mlx, mlx_new_window(mlx, w, h, str), w, h});
 }
 
-t_list	*ft_lstget(t_list *lst, int index)
-{
-	t_list	*n;
-	int		i;
-
-	i = 0;
-	n = lst;
-	if (n == NULL)
-		return (NULL);
-	if (n->next == NULL)
-		return (n);
-	while (n != NULL)
-	{
-		if (i >= index)
-			return (n);
-		n = n->next;
-		i++;
-	}
-	return (NULL);
-}
-
-void	ft_lstiter_param(t_list *lst, void (*f)(void *, t_game *), t_game *ptr)
-{
-	t_list	*temp;
-
-	temp = lst;
-	while (temp != NULL)
-	{
-		f(temp->content, ptr);
-		temp = temp->next;
-	}
-}
-
 int	charcmp(char *str, char c)
 {
 	int	i;

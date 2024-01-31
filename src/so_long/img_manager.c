@@ -40,3 +40,38 @@ t_img	new_img_file(t_win win, char *relative_path)
 				&img.line_length, &img.endian);
 	return (img);
 }
+
+void	imgcheck(t_img img)
+{
+	if (img.img == NULL)
+	{
+		mlx_destroy_window(img.win.mlx, img.win.win);
+		mlx_destroy_display(img.win.mlx);
+		free(img.win.mlx);
+		exit (1);
+	}
+}
+
+void	load_img(t_game *game)
+{
+	game->wall = new_img_file(game->win, "./textures/tile/wall.xpm");
+	imgcheck(game->wall);
+	game->ground = new_img_file(game->win, "./textures/tile/ground.xpm");
+	imgcheck(game->ground);
+	game->groundwall = new_img_file(game->win, "./textures/tile/walground.xpm");
+	imgcheck(game->groundwall);
+	game->exitwall = new_img_file(game->win, "./textures/exit/door.xpm");
+	imgcheck(game->exitwall);
+	game->exitground = new_img_file(game->win, "./textures/exit/trapdoor.xpm");
+	imgcheck(game->exitground);
+	game->itemground = new_img_file(game->win, "./textures/item/item.xpm");
+	imgcheck(game->itemground);
+	game->itemwall = new_img_file(game->win, "./textures/item/itemwall.xpm");
+	imgcheck(game->itemwall);
+	game->player.sprite = new_img_file(game->win,
+		"./textures/player/animright/right/tile1.xpm");
+	imgcheck(game->player.sprite);
+	game->player.spritewall = new_img_file(game->win,
+		"./textures/player/animright/rightwall/tile1.xpm");
+	imgcheck(game->player.spritewall);
+}

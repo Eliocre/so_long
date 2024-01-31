@@ -1,5 +1,6 @@
 
 NAME = so_long
+NAME_BONUS = so_long_bonus
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
@@ -9,20 +10,44 @@ SRC_DIR = src/
 MLBX_DIR = $(SRC_DIR)minilibx-linux/
 LIBFT_DIR = $(SRC_DIR)libft/
 SO_LONG_DIR = $(SRC_DIR)so_long/
+SO_LONG_BONUS_DIR = $(SRC_DIR)so_long_bonus/
 
-SRCS = main.c utils.c img_manager.c sprite_manager.c error_manager.c utils_error.c \
-		map_manager.c anim_manager.c utils_map.c control_manager.c
+
+SRCS_BONUS = main.c utils.c img_manager.c sprite_manager.c error_manager.c utils_error.c \
+		map_manager.c anim_manager.c utils_map.c control_manager.c init.c end.c  \
+		sprite_wall_manager.c anim_wall_manager.c map_interaction.c 
+
+SRCS = main.c utils.c img_manager.c error_manager.c utils_error.c \
+	map_manager.c utils_map.c control_manager.c init.c end.c map_interaction.c 
 
 HEADERS = ./include/so_long.h ./libft/include/libft.h ./libft/include/printf.h \
+		./libft/include/get_next_line.h \
+
+HEADERS_BONUS = ./include/so_long.h ./libft/include/libft.h ./libft/include/printf.h \
 		./libft/include/get_next_line_bonus.h \
 
 OBJS = $(addprefix $(SO_LONG_DIR), $(SRCS:.c=.o))
+OBJSBONUS = $(addprefix $(SO_LONG_BONUS_DIR), $(SRCS_BONUS:.c=.o))
 
 .SILENT : 
 
 all : $(NAME)
 
+bonus : $(NAME_BONUS)
+
+$(NAME_BONUS) : $(OBJSBONUS)
+	@rm -rf $(OBJS) $(NAME)
+	@echo "$(Red)Compilation de libft ...${NC}" 
+	$(MAKE) --no-print-directory -C $(LIBFT_DIR)
+	@echo "$(Red)Compilation de minilibx ...${NC}" 
+	$(MAKE) --no-print-directory -C $(MLBX_DIR)
+	@echo -n "$(Red)Compilation de so_long ...${NC}"
+	$(CC) $^ $(XFLAGS) $(CFLAGS) $(LIBFT_DIR)libft.a $(MLBX_DIR)libmlx.a -o $(NAME_BONUS) && sleep 0.1
+	@echo "$(Green)\r-----Compilation finie-----${NC}" 
+
+
 $(NAME) : $(OBJS)
+	@rm -rf $(OBJSBONUS) $(NAME_BONUS)
 	@echo "$(Red)Compilation de libft ...${NC}" 
 	$(MAKE) --no-print-directory -C $(LIBFT_DIR)
 	@echo "$(Red)Compilation de minilibx ...${NC}" 
@@ -31,23 +56,46 @@ $(NAME) : $(OBJS)
 	$(CC) $^ $(XFLAGS) $(CFLAGS) $(LIBFT_DIR)libft.a $(MLBX_DIR)libmlx.a -o $(NAME) && sleep 0.1
 	@echo "$(Green)\r-----Compilation finie-----${NC}" 
 
-%.o : %.c $(HEADERS) Makefile
+sus:all
+	@echo "$(IRed)           ⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀        $(NC)"
+	@echo "$(IRed)        ⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀     $(NC)"
+	@echo "$(IRed)        ⣼⣿⠋       ⢀⣀⣀⠈⢻⣿⣿⡄    $(NC)"
+	@echo "$(IRed)       ⣸⣿⡏   ⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄   $(NC)"
+	@echo "$(IRed)       ⣿⣿⠁  ⢰⣿⣿⣯⠁       ⠈⠙⢿⣷⡄ $(NC)"
+	@echo "$(IRed)  ⣀⣤⣴⣶⣶⣿⡟   ⢸⣿⣿⣿⣆          ⣿⣷ $(NC)"
+	@echo "$(IRed) ⢰⣿⡟⠋⠉⣹⣿⡇   ⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿ $(NC)"
+	@echo "$(IRed) ⢸⣿⡇  ⣿⣿⡇    ⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃ $(NC)"
+	@echo "$(IRed) ⣸⣿⡇  ⣿⣿⡇     ⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇  $(NC)"
+	@echo "$(IRed) ⠸⣿⣧⡀ ⣿⣿⡇                ⣿⣿⠃  $(NC)"
+	@echo "$(IRed)  ⠛⢿⣿⣿⣿⣿⣇     ⣰⣿⣿⣷⣶⣶⣶⣶⠶ ⢠⣿⣿   $(NC)"
+	@echo "$(IRed)       ⣿⣿     ⣿⣿⡇ ⣽⣿⡏⠁  ⢸⣿⡇   $(NC)"
+	@echo "$(IRed)       ⣿⣿     ⣿⣿⡇ ⢹⣿⡆   ⣸⣿⠇   $(NC)"
+	@echo "$(IRed)       ⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁ ⠈⠻⣿⣿⣿⣿⡿⠏    $(NC)"
+	@echo "$(IRed)       ⠈⠛⠻⠿⠿⠿⠿⠋⠁              $(NC)"
+	@echo "$(White)         ░█▀▀░█░█░█▀▀$(NC)"
+	@echo "$(White)         ░▀▀█░█░█░▀▀█$(NC)"
+	@echo "$(White)         ░▀▀▀░▀▀▀░▀▀▀$(NC)"
+
+%.o : $(SO_LONG_DIR)%.c $(HEADERS) Makefile
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o : $(SO_LONG_BONUS_DIR)%.c $(HEADERS) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
-	cd  $(MLBX_DIR) && $(MAKE) --no-print-directory clean
-	cd $(LIBFT_DIR) && $(MAKE) --no-print-directory clean
-	rm -rf $(OBJS)
+	@cd  $(MLBX_DIR) && $(MAKE) --no-print-directory clean
+	@cd $(LIBFT_DIR) && $(MAKE) --no-print-directory clean
+	@rm -rf $(OBJS) $(OBJSBONUS)
 
 fclean :
 	cd $(MLBX_DIR) && $(MAKE) --no-print-directory clean
 	cd $(LIBFT_DIR) && $(MAKE) --no-print-directory fclean
-	rm -rf $(OBJS) $(NAME)
+	rm -rf $(OBJS) $(OBJSBONUS) $(NAME) $(NAME_BONUS)
 
 re : fclean
 	$(MAKE) all
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re bonus
 
 # COLORS =======================================================================
 

@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 15:07:47 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/31 18:15:03 by eandre           ###   ########.fr       */
+/*   Updated: 2024/02/01 13:41:25 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ void	casemapplayer(char c, int i, int j, t_game *game)
 	if (c == 'P' && game->player.player_stats.curspot == '2')
 		mlx_put_image_to_window(game->win.mlx, game->win.win,
 			game->player.spritewall.img, 64 * i, 64 * j);
+	if (c == 'P' && game->player.player_stats.curspot == 'e')
+		mlx_put_image_to_window(game->win.mlx, game->win.win,
+			game->player.spritewall.img, 64 * i, 64 * j);
+	if (c == 'P' && game->player.player_stats.curspot == 'E')
+		mlx_put_image_to_window(game->win.mlx, game->win.win,
+			game->player.sprite.img, 64 * i, 64 * j);
 }
 
 void	loadmap(char **map, t_game *game)

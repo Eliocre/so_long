@@ -87,8 +87,7 @@ void	checkmap(int fd, t_maplayout *layout, char **map)
 			return ;
 		}
 		free(lastgnl);
-		lastgnl = ft_strdup(gnl);
-		*map = ft_strjoin_free(*map, gnl);
+		lastgnl = mallocerror(map, gnl);
 		checklayout(layout, lastgnl, layout->colcmp == 0, map);
 		layout->lincmp++;
 	}
@@ -119,4 +118,25 @@ void	checkerror(int argc, char *argv, char **map, t_maplayout *layout)
 	}
 	checkmap(fd, layout, map);
 	layout_errors(layout, *map);
+}
+
+char	*mallocerror(char **map, char *gnl)
+{
+	char	*lastgnl;
+
+	lastgnl = ft_strdup(gnl);
+	if (lastgnl == NULL)
+	{
+		free(gnl);
+		free(*map);
+		exit (1);
+	}
+	*map = ft_strjoin_free(*map, gnl);
+	if (*map == NULL)
+	{
+		free(lastgnl);
+		free(gnl);
+		exit (1);
+	}
+	return (lastgnl);
 }

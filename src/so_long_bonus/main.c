@@ -84,7 +84,7 @@ int	main(int argc, char **argv)
 	mlx_key_hook(game.win.win, ft_event, &game);
 	mlx_loop_hook(game.win.mlx, update, &game);
 	mlx_hook(game.win.win, DestroyNotify, StructureNotifyMask,
-		exit_hook, &game);
+		exit_hook_cross, &game);
 	mlx_loop(game.win.mlx);
 	mlx_destroy_window(game.win.mlx, game.win.win);
 	free(game.win.mlx);

@@ -78,8 +78,6 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	t_list		*test;
-	t_win		win;
 	t_img		wall;
 	t_img		ground;
 	t_img		groundwall;
@@ -87,6 +85,7 @@ typedef struct s_game
 	t_img		exitwall;
 	t_img		itemground;
 	t_img		itemwall;
+	t_win		win;
 	t_player	player;
 	char		**map;
 	t_maplayout	layout;
@@ -94,7 +93,6 @@ typedef struct s_game
 
 t_win			new_wind(int w, int h, char *str);
 t_img			new_img_file(t_win win, char *relative_path);
-t_img			new_img(int w, int h, t_win window);
 t_maplayout		layout_init(void);
 int				charcmp(char *str, char c);
 void			layout_errors(t_maplayout *layout, char *map);
@@ -126,5 +124,7 @@ int				exit_hook(t_game *game);
 void			load_img(t_game *game);
 void			itemground(t_game *game);
 void			itemwall(t_game *game);
+int				exit_hook_cross(t_game *game);
+char			*mallocerror(char **map, char *gnl);
 
 #endif

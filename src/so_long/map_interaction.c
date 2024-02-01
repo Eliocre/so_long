@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:16:31 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/31 14:17:25 by eandre           ###   ########.fr       */
+/*   Updated: 2024/02/01 14:32:42 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ void	itemwall(t_game *game)
 	if (game->player.player_stats.curspot == '2')
 		game->map[game->player.player_coord.y][game->player.player_coord.x]
 			= '2';
+	else if (game->player.player_stats.curspot == 'E')
+		game->map[game->player.player_coord.y][game->player.player_coord.x]
+			= 'E';
+	else if (game->player.player_stats.curspot == 'e')
+		game->map[game->player.player_coord.y][game->player.player_coord.x]
+			= 'e';
 	else
 		game->map[game->player.player_coord.y][game->player.player_coord.x]
 			= '0';
@@ -29,6 +35,12 @@ void	itemground(t_game *game)
 	if (game->player.player_stats.curspot == '2')
 		game->map[game->player.player_coord.y][game->player.player_coord.x]
 			= '2';
+	else if (game->player.player_stats.curspot == 'E')
+		game->map[game->player.player_coord.y][game->player.player_coord.x]
+			= 'E';
+	else if (game->player.player_stats.curspot == 'e')
+		game->map[game->player.player_coord.y][game->player.player_coord.x]
+			= 'e';
 	else
 		game->map[game->player.player_coord.y][game->player.player_coord.x]
 			= '0';

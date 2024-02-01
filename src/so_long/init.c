@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 22:55:39 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/31 18:20:33 by eandre           ###   ########.fr       */
+/*   Updated: 2024/02/01 17:06:00 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,21 @@ t_game	game_init(int argc, char **argv)
 	checkerror(argc, argv[1], &map_read, &game.layout);
 	game.map = ft_split(map_read, '\n');
 	if (game.map == NULL)
-		free_exit(map_read, "Malloc error\n l.35 tests.c", NULL);
+		free_exit(map_read, "Malloc error\n l.50 init.c", NULL);
 	game.player = playerinit();
 	game.player.player_coord = coord_finder(game.map, 'P', (t_coord){0, 0});
 	check_mapresolver(map_read, &game.layout, game.player.player_coord,
 		game.map);
 	game.win = new_wind(game.layout.colcmp * 64, game.layout.lincmp * 64,
 			"so_long");
+	free(map_read);
 	if (game.win.win == NULL)
 	{
-		mlx_destroy_display(game.win.mlx);
+		ft_printf("Window generation failed!");
+		free_map(game.map);
 		free(game.win.mlx);
 		exit (1);
 	}
 	load_img(&game);
-	free(map_read);
 	return (game);
 }

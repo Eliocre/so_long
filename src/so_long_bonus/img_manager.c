@@ -12,21 +12,6 @@
 
 #include "../../include/so_long_bonus.h"
 
-t_img	new_img(int w, int h, t_win window)
-{
-	t_img	image;
-
-	image.win = window;
-	image.img = mlx_new_image(window.mlx, w, h);
-	if (image.img == NULL)
-		return (image);
-	image.addr = mlx_get_data_addr(image.img, &(image.bits_per_pixel),
-			&(image.line_length), &(image.endian));
-	image.wi = w;
-	image.he = h;
-	return (image);
-}
-
 t_img	new_img_file(t_win win, char *relative_path)
 {
 	t_img	img;
@@ -41,13 +26,14 @@ t_img	new_img_file(t_win win, char *relative_path)
 	return (img);
 }
 
-void	imgcheck(t_img img)
+void	imgcheck(t_img img, t_game *game)
 {
 	if (img.img == NULL)
 	{
-		mlx_destroy_window(img.win.mlx, img.win.win);
-		mlx_destroy_display(img.win.mlx);
-		free(img.win.mlx);
+		free_map(game->map);
+		mlx_destroy_window(game->win.mlx, game->win.win);
+		mlx_destroy_display(game->win.mlx);
+		free(game->win.mlx);
 		exit (1);
 	}
 }
@@ -55,21 +41,21 @@ void	imgcheck(t_img img)
 void	load_img(t_game *game)
 {
 	game->wall = new_img_file(game->win, "./textures/tile/wall.xpm");
-	imgcheck(game->wall);
+	imgcheck(game->wall, game);
 	game->ground = new_img_file(game->win, "./textures/tile/ground.xpm");
-	imgcheck(game->ground);
+	imgcheck(game->ground, game);
 	game->groundwall = new_img_file(game->win, "./textures/tile/walground.xpm");
-	imgcheck(game->groundwall);
+	imgcheck(game->groundwall, game);
 	game->exitwall = new_img_file(game->win, "./textures/exit/door.xpm");
-	imgcheck(game->exitwall);
+	imgcheck(game->exitwall, game);
 	game->exitground = new_img_file(game->win, "./textures/exit/trapdoor.xpm");
-	imgcheck(game->exitground);
+	imgcheck(game->exitground, game);
 	game->itemground = new_img_file(game->win, "./textures/item/item.xpm");
-	imgcheck(game->itemground);
+	imgcheck(game->itemground, game);
 	game->itemwall = new_img_file(game->win, "./textures/item/itemwall.xpm");
-	imgcheck(game->itemwall);
+	imgcheck(game->itemwall, game);
 	game->mobswall = new_img_file(game->win, "./textures/mob/cerberuswall.xpm");
-	imgcheck(game->mobswall);
+	imgcheck(game->mobswall, game);
 	game->mobsground = new_img_file(game->win, "./textures/mob/cerberus.xpm");
-	imgcheck(game->mobsground);
+	imgcheck(game->mobsground, game);
 }

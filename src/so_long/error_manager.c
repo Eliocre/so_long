@@ -56,7 +56,6 @@ void	checklayout(t_maplayout *layout, char *gnl, int first_last, char **map)
 	layout->exicmp += charcmp(gnl, 'E');
 	layout->stacmp += charcmp(gnl, 'P');
 	layout->itecmp += charcmp(gnl, 'C');
-	// layout->mobcmp += charcmp(gnl, 'M');
 	i = 0;
 	while (gnl[i])
 	{
@@ -87,8 +86,7 @@ void	checkmap(int fd, t_maplayout *layout, char **map)
 			return ;
 		}
 		free(lastgnl);
-		lastgnl = ft_strdup(gnl);
-		*map = ft_strjoin_free(*map, gnl);
+		lastgnl = mallocerror(map, gnl);
 		checklayout(layout, lastgnl, layout->colcmp == 0, map);
 		layout->lincmp++;
 	}
@@ -119,4 +117,27 @@ void	checkerror(int argc, char *argv, char **map, t_maplayout *layout)
 	}
 	checkmap(fd, layout, map);
 	layout_errors(layout, *map);
+}
+
+char	*mallocerror(char **map, char *gnl)
+{
+	char	*lastgnl;
+
+	lastgnl = ft_strdup(gnl);
+	if (lastgnl == NULL)
+	{
+		ft_printf("Malloc error\n l.129 error_manager.c");
+		free(gnl);
+		free(*map);
+		exit (1);
+	}
+	*map = ft_strjoin_free(*map, gnl);
+	if (*map == NULL)
+	{
+		ft_printf("Malloc error\n l.137 error_manager.c");
+		free(lastgnl);
+		free(gnl);
+		exit (1);
+	}
+	return (lastgnl);
 }

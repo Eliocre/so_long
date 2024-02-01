@@ -6,7 +6,7 @@
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 22:55:39 by eandre            #+#    #+#             */
-/*   Updated: 2024/01/31 18:22:46 by eandre           ###   ########.fr       */
+/*   Updated: 2024/02/01 17:04:44 by eandre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ t_game	game_init(int argc, char **argv)
 			"so_long");
 	if (game.win.win == NULL)
 	{
-		mlx_destroy_display(game.win.mlx);
+		free_map(game.map);
 		free(game.win.mlx);
-		exit (1);
+		free_exit(map_read, "Window generation failed!", NULL);
 	}
 	game.framecmp = 1;
 	load_img(&game);

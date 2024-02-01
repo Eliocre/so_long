@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_bonus.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eandre <eandre@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -117,7 +117,6 @@ typedef struct s_game
 
 t_win			new_wind(int w, int h, char *str);
 t_img			new_img_file(t_win win, char *relative_path);
-t_img			new_img(int w, int h, t_win window);
 t_maplayout		layout_init(void);
 int				charcmp(char *str, char c);
 void			layout_errors(t_maplayout *layout, char *map);
@@ -170,5 +169,8 @@ void			spritesinit(t_game *game);
 void			spriteswallinit(t_game *game);
 void			itemground(t_game *game);
 void			itemwall(t_game *game);
+int				exit_hook_cross(t_game *game);
+char			*mallocerror(char **map, char *gnl);
+int				exit_hook_without_anim(t_game *game, char *check, char *tofree);
 
 #endif

@@ -37,6 +37,8 @@ bonus : $(NAME_BONUS)
 
 $(NAME_BONUS) : $(OBJSBONUS)
 	@rm -rf $(OBJS) $(NAME)
+	@echo "$(Red)Check de la norme :${NC}"
+	@norminette src/so_long_bonus include/so_long_bonus.h
 	@echo "$(Red)Compilation de libft ...${NC}" 
 	$(MAKE) --no-print-directory -C $(LIBFT_DIR)
 	@echo "$(Red)Compilation de minilibx ...${NC}" 
@@ -48,6 +50,8 @@ $(NAME_BONUS) : $(OBJSBONUS)
 
 $(NAME) : $(OBJS)
 	@rm -rf $(OBJSBONUS) $(NAME_BONUS)
+	@echo "$(Red)Check de la norme :${NC}"
+	@norminette src/so_long include/so_long.h
 	@echo "$(Red)Compilation de libft ...${NC}" 
 	$(MAKE) --no-print-directory -C $(LIBFT_DIR)
 	@echo "$(Red)Compilation de minilibx ...${NC}" 
